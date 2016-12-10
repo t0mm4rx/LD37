@@ -30,8 +30,6 @@ public class Player extends GameObject{
 
     protected void update(float delta) {
 
-        Game.debug(3, "VelX : " + body.getBody().getLinearVelocity().x + " && VelY : " + body.getBody().getLinearVelocity().y);
-
         //Decreasing speed
         if (body.getBody().getLinearVelocity().x < 0) {
             body.getBody().setLinearVelocity(body.getBody().getLinearVelocity().x + DECELERATION, body.getBody().getLinearVelocity().y);
@@ -79,17 +77,17 @@ public class Player extends GameObject{
 
         //Zoom when M is pressed
         if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
-            if (Game.tweenManager.getValue("CameraZoom") < 1f) {
+            if (Game.tweenManager.getValue("CameraZoom") == 0f) {
                 Game.tweenManager.goTween(new Tween("CameraZoom", Tween.CUBE_EASE_INOUT, 0, 1, 1f, 0f, false));
             }
         }
         //Dezoom if M is not pressed
         if (!Gdx.input.isKeyPressed(Input.Keys.M)) {
             if (Game.tweenManager.getValue("CameraZoom") == 1f) {
-                Game.tweenManager.goTween(new Tween("CameraZoom", Tween.CUBE_EASE_INOUT, 1, -1, 1f, 0f, false));
+                Game.tweenManager.goTween(new Tween("CameraZoom", Tween.CUBE_EASE_INOUT, 1, -1, 1f, .1f, false));
             }
         }
-        
+
         //Setting the camera centered on the player
         Game.getCurrentScreen().camera.position.set(getTransform().getPosition().x, getTransform().getPosition().y, 0);
 

@@ -1,5 +1,7 @@
 package fr.tommarx.gameengine.Easing;
 
+import com.badlogic.gdx.utils.Array;
+
 import java.util.ArrayList;
 
 public class TweenManager {
@@ -13,15 +15,13 @@ public class TweenManager {
     }
 
     public void goTween(Tween tween) {
-        Tween toDelete = null;
+        ArrayList<Tween> toDelete = new ArrayList<Tween>();
         for (Tween t : deadTweens) {
             if (t.getName().equals(tween.getName())) {
-                toDelete = t;
+                toDelete.add(t);
             }
         }
-        if (toDelete != null) {
-            deadTweens.remove(toDelete);
-        }
+        deadTweens.removeAll(toDelete);
         tweens.add(tween);
     }
 

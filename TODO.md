@@ -10,15 +10,16 @@
 - [ ] Sprites player
 
 ## Prog
-- [ ] Player : mouvements, animations
+- [x] Player : mouvements, animations
 - [ ] Portes : intéractions
 - [ ] Key : intéractions
 - [ ] Timer
 - [ ] Gestion lumière
-- [ ] Overview map
+- [x] Overview map
 
 ## Features
 - [ ] Menu
 - [ ] Son
 - [ ] Maps aléatoires
 - [ ] Mettre des tweens partout
+- [ ] Aide joueur avec explications au débuts
