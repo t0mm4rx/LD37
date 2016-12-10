@@ -13,6 +13,15 @@ public class TweenManager {
     }
 
     public void goTween(Tween tween) {
+        Tween toDelete = null;
+        for (Tween t : deadTweens) {
+            if (t.getName().equals(tween.getName())) {
+                toDelete = t;
+            }
+        }
+        if (toDelete != null) {
+            deadTweens.remove(toDelete);
+        }
         tweens.add(tween);
     }
 

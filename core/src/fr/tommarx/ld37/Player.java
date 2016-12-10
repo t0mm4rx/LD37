@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import fr.tommarx.gameengine.Components.BoxBody;
 import fr.tommarx.gameengine.Components.BoxRenderer;
 import fr.tommarx.gameengine.Components.Transform;
+import fr.tommarx.gameengine.Easing.Tween;
 import fr.tommarx.gameengine.Game.Game;
 import fr.tommarx.gameengine.Game.GameObject;
 
@@ -21,6 +22,7 @@ public class Player extends GameObject{
         super(transform);
 
         body = new BoxBody(this, 32, 32, BodyDef.BodyType.DynamicBody);
+        body.getBody().setFixedRotation(true);
 
         addComponent(new BoxRenderer(this, 32, 32, new Color(1, 1, 1, 1)));
         addComponent(body);
@@ -74,6 +76,25 @@ public class Player extends GameObject{
         if (body.getBody().getLinearVelocity().y < DECELERATION && body.getBody().getLinearVelocity().y > -DECELERATION) {
             body.getBody().setLinearVelocity(new Vector2(body.getBody().getLinearVelocity().x, 0));
         }
+
+        //Zoom when M is pressed
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            if (Game.tweenManager.getValue("CameraZoom") < 1f) {
+                Game.tweenManager.goTween(new Tween("CameraZoom", Tween.CUBE_EASE_INOUT, 0, 1, 1f, 0f, false));
+            }
+        }
+        //Dezoom if M is not pressed
+        if (!Gdx.input.isKeyPressed(Input.Keys.M)) {
+            if (Game.tweenManager.getValue("CameraZoom") == 1f) {
+                Game.tweenManager.goTween(new Tween("CameraZoom", Tween.CUBE_EASE_INOUT, 1, -1, 1f, 0f, false));
+            }
+        }
+        
+        //Setting the camera centered on the player
+        Game.getCurrentScreen().camera.position.set(getTransform().getPosition().x, getTransform().getPosition().y, 0);
+
+        //Set the zoom with the tween 'CameraZoom'
+        Game.getCurrentScreen().camera.zoom = Game.tweenManager.getValue("CameraZoom") + 1;
 
     }
 }

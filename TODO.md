@@ -15,6 +15,7 @@
 - [ ] Key : intéractions
 - [ ] Timer
 - [ ] Gestion lumière
+- [ ] Overview map
 
 ## Features
 - [ ] Menu
