@@ -84,7 +84,7 @@ public class GameScreen extends Screen{
     }
 
     public void generateRoom() {
-        Vector2 size = MapReader.read(Gdx.files.internal("map.map"));
+        Vector2 size = fr.tommarx.ld37.Map.MapReader.read(Gdx.files.internal("map.map"));
         this.width = size.x;
         this.height = size.y;
         EmptyGameObject background = new EmptyGameObject(new Transform(new Vector2(64, 64)));

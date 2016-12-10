@@ -27,12 +27,12 @@ public class Zombie extends Monster {
     protected void update(float delta) {
         if (isComingBack) {
             body.getBody().setLinearVelocity(new Vector2(from.x - to.x, from.y - to.y).nor().scl(speed));
-            if (getTransform().getPosition().dst(from) < speed) {
+            if (getTransform().getPosition().dst(from) < speed / 8) {
                 isComingBack = false;
             }
         } else {
             body.getBody().setLinearVelocity(new Vector2(to.x - from.x, to.y - from.y).nor().scl(speed));
-            if (getTransform().getPosition().dst(to) < speed) {
+            if (getTransform().getPosition().dst(to) < speed / 8) {
                 isComingBack = true;
             }
         }
