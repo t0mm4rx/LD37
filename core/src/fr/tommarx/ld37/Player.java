@@ -95,7 +95,12 @@ public class Player extends GameObject{
         }
 
         //Setting the camera centered on the player
-        Game.getCurrentScreen().camera.position.set(getTransform().getPosition().x, getTransform().getPosition().y, 0);
+        if (getTransform().getPosition().x - Gdx.graphics.getWidth() / 2 > 0 && getTransform().getPosition().x + Gdx.graphics.getWidth() / 2 < 40 * 32) {
+            Game.getCurrentScreen().camera.position.set(getTransform().getPosition().x, Game.getCurrentScreen().camera.position.y, 0);
+        }
+        if (getTransform().getPosition().y - Gdx.graphics.getHeight() / 2 > 0 && getTransform().getPosition().y + Gdx.graphics.getHeight() / 2 < 25 * 32) {
+            Game.getCurrentScreen().camera.position.set(Game.getCurrentScreen().camera.position.x, getTransform().getPosition().y, 0);
+        }
 
         //Set the zoom with the tween 'CameraZoom'
         Game.getCurrentScreen().camera.zoom = Game.tweenManager.getValue("CameraZoom") + 1;
