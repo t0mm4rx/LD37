@@ -7,6 +7,6 @@ public class GameClass extends Game {
 
 	public void create() {
 		init();
-		setScreen(new MenuScreen(this));
+		setScreen(new GameScreen(this));
 	}
 }
