@@ -108,6 +108,18 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
         return gos;
     }
 
+    public GameObject getGameObjectByTag(String tag) {
+        for (Drawable go : drawables) {
+            if (go.isGameObject()) {
+                if (((GameObject) go).getTag().equals(tag)) {
+                    return ((GameObject) go);
+                }
+            }
+        }
+
+        return null;
+    }
+
     public ArrayList<GameObject> getGameObjectsByTagInHUD(String tag) {
         ArrayList<GameObject> gos = new ArrayList<GameObject>();
         for (Drawable go : drawablesHUD) {

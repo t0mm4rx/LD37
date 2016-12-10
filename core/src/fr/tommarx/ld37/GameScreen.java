@@ -6,10 +6,14 @@ import com.badlogic.gdx.math.Vector2;
 
 import fr.tommarx.gameengine.Collisions.CollisionsListener;
 import fr.tommarx.gameengine.Collisions.CollisionsManager;
+import fr.tommarx.gameengine.Components.SpriteRenderer;
 import fr.tommarx.gameengine.Components.Transform;
+import fr.tommarx.gameengine.Game.EmptyGameObject;
 import fr.tommarx.gameengine.Game.Game;
 import fr.tommarx.gameengine.Game.GameObject;
 import fr.tommarx.gameengine.Game.Screen;
+import fr.tommarx.ld37.Monsters.Monster;
+import fr.tommarx.ld37.Monsters.Zombie;
 
 public class GameScreen extends Screen{
 
@@ -35,10 +39,17 @@ public class GameScreen extends Screen{
                     Game.getCurrentScreen().remove(a);
                     ((Player)b).keys++;
                 }
+                if (a.getTag().equals("Player") && b.getTag().equals("Monster")) {
+                    ((Player) a).hurt((int)((Monster)b).damages, b.getTransform().getPosition(), ((Monster)b).knockback);
+                }
+                if (b.getTag().equals("Player") && a.getTag().equals("Monster")) {
+                    ((Player) b).hurt((int)((Monster)a).damages, a.getTransform().getPosition(), ((Monster)a).knockback);
+                }
             }
 
             public void collisionEnd(GameObject a, GameObject b) {}
         });
+        addInHUD(new HUD(new Transform(new Vector2(0, 0))));
     }
 
     public void update() {
@@ -52,7 +63,16 @@ public class GameScreen extends Screen{
     }
 
     public void generateRoom() {
-        //Generate the room
+        EmptyGameObject background = new EmptyGameObject(new Transform(new Vector2(64, 64)));
+        for (int x = 0; x < WIDTH * 32 / 128; x++) {
+            for (int y = 0; y < HEIGHT * 32 / 128 + 1; y++) {
+                SpriteRenderer renderer = new SpriteRenderer(background, Gdx.files.internal("sprites/ground.png"));
+                renderer.setOffset(x * 128, y * 128);
+                background.addComponent(renderer);
+            }
+        }
+        background.setLayout(0);
+        add(background);
         for (int x = 0; x < WIDTH; x++) {
             add(new Wall(new Transform(new Vector2(x * 32 + 1, 0))));
             add(new Wall(new Transform(new Vector2(x * 32, HEIGHT * 32))));
@@ -64,11 +84,11 @@ public class GameScreen extends Screen{
         add(new Key(new Transform(new Vector2(2 * 32, 2 * 32))));
         add(new Wall(new Transform(new Vector2(4 * 32, 1 * 32))));
         add(new Door(new Transform(new Vector2(4 * 32, 2.5f * 32))));
-        /*add(new Wall(new Transform(new Vector2(4 * 32, 2 * 32))));
-        add(new Wall(new Transform(new Vector2(4 * 32, 3 * 32))));*/
         add(new Wall(new Transform(new Vector2(4 * 32, 4 * 32))));
         add(new Wall(new Transform(new Vector2(3 * 32, 4 * 32))));
         add(new Wall(new Transform(new Vector2(2 * 32, 4 * 32))));
         add(new Wall(new Transform(new Vector2(1 * 32, 4 * 32))));
+        add(new ExitDoor(new Transform(new Vector2((WIDTH - 1) * 32, HEIGHT / 2 * 32))));
+        add(new Zombie(new Transform(new Vector2(800, 500)), new Vector2(500, 300)));
     }
 }

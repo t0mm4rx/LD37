@@ -17,7 +17,7 @@ public class Player extends GameObject{
 
     BoxBody body;
     private final int ACCELERATION = 20, SPEED = 300, DECELERATION = 7;
-    public int keys;
+    public int keys, life;
 
     public Player(Transform transform) {
         super(transform);
@@ -25,6 +25,7 @@ public class Player extends GameObject{
         setTag("Player");
 
         keys = 0;
+        life = 100;
 
         body = new BoxBody(this, 32, 32, BodyDef.BodyType.DynamicBody);
         body.getBody().setFixedRotation(true);
@@ -99,5 +100,13 @@ public class Player extends GameObject{
         //Set the zoom with the tween 'CameraZoom'
         Game.getCurrentScreen().camera.zoom = Game.tweenManager.getValue("CameraZoom") + 1;
 
+    }
+
+    public void hurt (int damages, Vector2 other, float knockback) {
+        life -= damages;
+        body.getBody().setLinearVelocity(new Vector2(
+                body.getBody().getLinearVelocity().x + (other.x - getTransform().getPosition().x) * -knockback,
+                body.getBody().getLinearVelocity().y + (other.y - getTransform().getPosition().y) * -knockback
+        ));
     }
 }

@@ -13,6 +13,7 @@
 - [x] Player : mouvements, animations
 - [x] Portes : intéractions
 - [ ] Portes à l'horizontal
+- [x] Porte de sortie
 - [x] Key : intéractions
 - [ ] Timer
 - [ ] HUD

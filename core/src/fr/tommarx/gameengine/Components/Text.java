@@ -80,6 +80,10 @@ public class Text extends Component {
     public void update() {
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public void dispose(){
         font.dispose();
     }
