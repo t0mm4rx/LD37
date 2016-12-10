@@ -56,4 +56,9 @@ public class Transform extends Component {
     public void update() {
 
     }
+
+    @Override
+    public void dispose() {
+
+    }
 }

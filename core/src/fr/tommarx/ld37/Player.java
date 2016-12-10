@@ -17,9 +17,14 @@ public class Player extends GameObject{
 
     BoxBody body;
     private final int ACCELERATION = 20, SPEED = 300, DECELERATION = 7;
+    public int keys;
 
     public Player(Transform transform) {
         super(transform);
+
+        setTag("Player");
+
+        keys = 0;
 
         body = new BoxBody(this, 32, 32, BodyDef.BodyType.DynamicBody);
         body.getBody().setFixedRotation(true);

@@ -52,7 +52,7 @@ public abstract class GameObject extends Drawable {
                 return comp;
             }
         }
-        System.err.println("Warning : trying to get an non-existing component.");
+        //System.err.println("Warning : trying to get an non-existing component.");
         return null;
     }
 
@@ -94,5 +94,11 @@ public abstract class GameObject extends Drawable {
     }
 
     protected abstract void update(float delta);
+
+    public void dispose() {
+        for (Component comp : components) {
+            comp.dispose();
+        }
+    }
 
 }

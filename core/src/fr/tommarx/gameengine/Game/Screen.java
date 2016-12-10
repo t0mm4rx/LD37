@@ -130,6 +130,25 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
         this.drawablesHUD.add(go);
     }
 
+    public void remove(Drawable go) {
+        ArrayList<Drawable> toDelete = new ArrayList<Drawable>();
+        for (Drawable d : drawables) {
+            if (d.equals(go)) {
+                toDelete.add(d);
+            }
+        }
+        for (Drawable d : drawablesHUD) {
+            if (d.equals(go)) {
+                toDelete.add(d);
+            }
+        }
+        for (Drawable d : toDelete) {
+            d.dispose();
+        }
+        drawables.removeAll(toDelete);
+        drawablesHUD.removeAll(toDelete);
+    }
+
     public void render (float delta) {
         world.step(Gdx.graphics.getDeltaTime(), 6, 2);
         camera.update();
@@ -169,6 +188,16 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
             d.renderInHUD();
             d.update();
         }
+    }
+
+    public ArrayList<GameObject> getGameObjects() {
+        ArrayList<GameObject> gos = new ArrayList<GameObject>();
+        for (Drawable d : drawables) {
+            if (d.isGameObject()) {
+                gos.add((GameObject) d);
+            }
+        }
+        return gos;
     }
 
     public abstract void update();

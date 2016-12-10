@@ -31,4 +31,6 @@ public abstract class Drawable {
         scrollingSpeed = s;
     }
 
+    public abstract void dispose();
+
 }

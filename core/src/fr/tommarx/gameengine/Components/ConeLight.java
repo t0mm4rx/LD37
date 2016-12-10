@@ -56,4 +56,8 @@ public class ConeLight extends Component{
             lastAngle = go.getTransform().getRotation();
         }
     }
+
+    public void dispose() {
+        light.dispose();
+    }
 }

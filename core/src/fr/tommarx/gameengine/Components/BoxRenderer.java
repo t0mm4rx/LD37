@@ -67,4 +67,8 @@ public class BoxRenderer extends Component{
     public void update() {
 
     }
+
+    public void dispose() {
+        shapeRenderer.dispose();
+    }
 }

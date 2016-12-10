@@ -13,4 +13,6 @@ public abstract class Component extends Drawable {
 
    public abstract void update();
 
+   public abstract void dispose();
+
 }

@@ -73,6 +73,10 @@ public class BoxBody extends Component{
         go.getTransform().setRotation(Math.RadianToDegree(body.getAngle()));
     }
 
+    public void dispose() {
+        Game.getCurrentScreen().world.destroyBody(body);
+    }
+
     public Vector2 getSize() {
         return new Vector2(width, height);
     }

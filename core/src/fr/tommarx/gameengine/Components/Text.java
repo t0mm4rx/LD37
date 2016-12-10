@@ -17,6 +17,7 @@ public class Text extends Component {
     GameObject go;
     GlyphLayout glyphLayout;
     Color color;
+    int offsetX, offsetY;
 
     public Text(GameObject go, String text, Color color) {
         this.go = go;
@@ -24,6 +25,8 @@ public class Text extends Component {
         font = new BitmapFont();
         glyphLayout = new GlyphLayout();
         this.color = color;
+        offsetX = 0;
+        offsetY = 0;
     }
 
     public Text(GameObject go, FileHandle fontFile, int size, String text, Color color) {
@@ -45,8 +48,8 @@ public class Text extends Component {
         font.setColor(color);
         font.draw(Game.batch,
                 text,
-                go.getTransform().getPosition().x - glyphLayout.width / 2,
-                go.getTransform().getPosition().y - glyphLayout.height / 2
+                go.getTransform().getPosition().x - glyphLayout.width / 2 + offsetX,
+                go.getTransform().getPosition().y - glyphLayout.height / 2 + offsetY
         );
     }
 
@@ -56,9 +59,14 @@ public class Text extends Component {
         font.setColor(color);
         font.draw(Game.HUDbatch,
                 text,
-                go.getTransform().getPosition().x - glyphLayout.width / 2,
-                go.getTransform().getPosition().y - glyphLayout.height / 2
+                go.getTransform().getPosition().x - glyphLayout.width / 2 + offsetX,
+                go.getTransform().getPosition().y - glyphLayout.height / 2 + offsetY
         );
+    }
+
+    public void setOffset(int x, int y) {
+        this.offsetX = x;
+        this.offsetY = y;
     }
 
     public Color getColor () {
@@ -70,5 +78,9 @@ public class Text extends Component {
     }
 
     public void update() {
+    }
+
+    public void dispose(){
+        font.dispose();
     }
 }

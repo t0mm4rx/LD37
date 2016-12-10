@@ -106,4 +106,7 @@ public class SpriteRenderer extends Component {
     public void update() {
         getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
     }
+
+    public void dispose() {
+    }
 }

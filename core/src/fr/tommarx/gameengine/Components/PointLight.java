@@ -45,4 +45,8 @@ public class PointLight extends Component {
             lastY = go.getTransform().getPosition().y;
         }
     }
+
+    public void dispose() {
+        light.dispose();
+    }
 }

@@ -3,18 +3,18 @@ package fr.tommarx.ld37;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
-import fr.tommarx.gameengine.Components.BoxBody;
 import fr.tommarx.gameengine.Components.BoxRenderer;
+import fr.tommarx.gameengine.Components.CircleBody;
 import fr.tommarx.gameengine.Components.Transform;
 import fr.tommarx.gameengine.Game.GameObject;
 
-public class Wall extends GameObject{
+public class Key extends GameObject {
 
-    public Wall(Transform transform) {
+    public Key(Transform transform) {
         super(transform);
-        setTag("Wall");
-        addComponent(new BoxRenderer(this, 32, 32, new Color(0.5f, 0.5f, 0.5f, 1f)));
-        addComponent(new BoxBody(this, 32, 32, BodyDef.BodyType.StaticBody));
+        setTag("Key");
+        addComponent(new BoxRenderer(this, 10, 10, Color.YELLOW));
+        addComponent(new CircleBody(this, 5, BodyDef.BodyType.DynamicBody));
     }
 
     protected void update(float delta) {

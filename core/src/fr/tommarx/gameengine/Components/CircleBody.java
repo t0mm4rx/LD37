@@ -68,6 +68,10 @@ public class CircleBody extends Component{
         go.getTransform().setRotation(Math.RadianToDegree(body.getAngle()));
     }
 
+    public void dispose() {
+        Game.getCurrentScreen().world.destroyBody(body);
+    }
+
     public float getRadius() {
         return radius;
     }

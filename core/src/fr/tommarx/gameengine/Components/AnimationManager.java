@@ -71,4 +71,8 @@ public class AnimationManager extends Component {
             stateTime += Gdx.graphics.getDeltaTime();
         }
     }
+
+    public void dispose() {
+
+    }
 }
