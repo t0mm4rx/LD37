@@ -2,21 +2,26 @@ package fr.tommarx.ld37.Monsters;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 
 import fr.tommarx.gameengine.Components.BoxRenderer;
+import fr.tommarx.gameengine.Components.CircleBody;
 import fr.tommarx.gameengine.Components.Transform;
 
 public class Zombie extends Monster {
 
     private Vector2 from, to;
     private boolean isComingBack;
+    private CircleBody body;
 
     public Zombie(Transform transform, Vector2 target) {
-        super(transform, 60, 10, 20);
+        super(transform, 60, 1, 20);
         from = transform.getPosition();
         to = target;
         isComingBack = false;
         addComponent(new BoxRenderer(this, 32, 32, Color.BLACK));
+        body = new CircleBody(this, 16, BodyDef.BodyType.DynamicBody);
+        addComponent(body);
     }
 
     protected void update(float delta) {

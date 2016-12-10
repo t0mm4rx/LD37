@@ -27,3 +27,4 @@
 - [ ] Maps aléatoires
 - [ ] Mettre des tweens partout
 - [ ] Aide joueur avec explications au débuts
+- [ ] Screen shakes

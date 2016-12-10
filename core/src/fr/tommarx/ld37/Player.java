@@ -26,7 +26,7 @@ public class Player extends GameObject{
         setTag("Player");
 
         keys = 0;
-        life = 100;
+        life = 10;
 
         body = new BoxBody(this, 32, 32, BodyDef.BodyType.DynamicBody);
         body.getBody().setFixedRotation(true);
@@ -136,6 +136,10 @@ public class Player extends GameObject{
 
         //Set the zoom with the tween 'CameraZoom'
         Game.getCurrentScreen().camera.zoom = Game.tweenManager.getValue("CameraZoom") + 1;
+
+        if (life <= 0) {
+            ((GameScreen)Game.getCurrentScreen()).die();
+        }
 
     }
 

@@ -28,8 +28,8 @@ public class ExitDoor extends GameObject {
         setTag("ExitDoor");
         addComponent(new BoxRenderer(this, 20, 128, Color.BLUE));
         addComponent(new BoxBody(this, 20, 128, BodyDef.BodyType.StaticBody));
-        text = new Text(this, "Press enter to open", new Color(1f, 1f, 1f, 0f));
-        text.setOffset(-70, 0);
+        text = new Text(this, Gdx.files.internal("vcr.ttf"), 14, "Press enter to open", new Color(1f, 1f, 1f, 0f));
+        text.setOffset(-90, 0);
         id = UUID.randomUUID().toString();
         addComponent(text);
     }

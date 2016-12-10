@@ -22,16 +22,27 @@ public class Door extends GameObject {
     Text text;
     String id;
     GameObject _this;
+    float width, height;
+    boolean isVertical;
 
-    public Door(Transform transform) {
+    public Door(Transform transform, float width, float height) {
         super(transform);
         _this = this;
         setTag("Door");
-        addComponent(new BoxRenderer(this, 10, 64, Color.WHITE));
-        addComponent(new BoxBody(this, 10, 64, BodyDef.BodyType.StaticBody));
-        text = new Text(this, "Press enter to open", new Color(1f, 1f, 1f, 0f));
-        text.setOffset(70, 0);
+        addComponent(new BoxRenderer(this, width, height, Color.WHITE));
+        addComponent(new BoxBody(this, width, height, BodyDef.BodyType.StaticBody));
+        text = new Text(this, Gdx.files.internal("vcr.ttf"), 12, "Press enter to open", new Color(1f, 1f, 1f, 0f));
         id = UUID.randomUUID().toString();
+        this.width = width;
+        this.height = height;
+        if (height > width) {
+            isVertical = true;
+            text.setOffset(80, 0);
+        } else {
+            isVertical = false;
+            text.setOffset(0, -30);
+        }
+
         addComponent(text);
     }
 
@@ -54,7 +65,11 @@ public class Door extends GameObject {
         }
         text.setColor(new Color(1, 1, 1, Game.tweenManager.getValue("DoorAlpha:" + id)));
         if (Game.tweenManager.getValue("DoorScale:" + id) != 0) {
-            ((BoxRenderer) getComponentByClass("BoxRenderer")).setHeight(Game.tweenManager.getValue("DoorScale:" + id) * 64);
+            if (isVertical) {
+                ((BoxRenderer) getComponentByClass("BoxRenderer")).setHeight(Game.tweenManager.getValue("DoorScale:" + id) * height);
+            } else {
+                ((BoxRenderer) getComponentByClass("BoxRenderer")).setWidth(Game.tweenManager.getValue("DoorScale:" + id) * width);
+            }
         }
     }
 

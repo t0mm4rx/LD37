@@ -5,27 +5,36 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.concurrent.Callable;
+
 import fr.tommarx.gameengine.Collisions.CollisionsListener;
 import fr.tommarx.gameengine.Collisions.CollisionsManager;
+import fr.tommarx.gameengine.Components.BoxRenderer;
 import fr.tommarx.gameengine.Components.SpriteRenderer;
 import fr.tommarx.gameengine.Components.Transform;
+import fr.tommarx.gameengine.Easing.Tween;
 import fr.tommarx.gameengine.Game.EmptyGameObject;
 import fr.tommarx.gameengine.Game.Game;
 import fr.tommarx.gameengine.Game.GameObject;
 import fr.tommarx.gameengine.Game.Screen;
-import fr.tommarx.ld37.Monsters.Knight;
 import fr.tommarx.ld37.Monsters.Monster;
+import fr.tommarx.ld37.Monsters.Turret;
+import fr.tommarx.ld37.Monsters.Zombie;
 
 public class GameScreen extends Screen{
 
     Player player;
     private final int WIDTH = 40, HEIGHT = 25;
+    EmptyGameObject overlay;
+    HUD hud;
+    private boolean isDead;
 
     public GameScreen(Game game) {
         super(game);
     }
 
     public void show() {
+        isDead = false;
         areLightsEnabled(true);
         world.setGravity(new Vector2(0f, 0f));
         rayHandler.setAmbientLight(new Color(0, 0, 0, 0.6f));
@@ -42,17 +51,28 @@ public class GameScreen extends Screen{
                     Game.getCurrentScreen().remove(a);
                     ((Player)b).keys++;
                 }
-                if (a.getTag().equals("Player") && b.getTag().equals("Monster")) {
+                if (a.getTag().equals("Player") && b.getTag().contains("Monster")) {
                     ((Player) a).hurt((int)((Monster)b).damages, b.getTransform().getPosition(), ((Monster)b).knockback);
                 }
-                if (b.getTag().equals("Player") && a.getTag().equals("Monster")) {
+                if (b.getTag().equals("Player") && a.getTag().contains("Monster")) {
                     ((Player) b).hurt((int)((Monster)a).damages, a.getTransform().getPosition(), ((Monster)a).knockback);
+                }
+                if (b.getTag().contains("Bullet")) {
+                    Game.getCurrentScreen().remove(b);
+                }
+                if (a.getTag().contains("Bullet")) {
+                    Game.getCurrentScreen().remove(a);
                 }
             }
 
             public void collisionEnd(GameObject a, GameObject b) {}
         });
-        addInHUD(new HUD(new Transform(new Vector2(0, 0))));
+        hud = new HUD(new Transform(new Vector2(0, 0)));
+        addInHUD(hud);
+        overlay = new EmptyGameObject(new Transform(new Vector2(camera.position.x, camera.position.y)));
+        overlay.addComponent(new BoxRenderer(overlay, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new Color(0, 0, 0, 1)));
+        add(overlay);
+        Game.tweenManager.goTween(new Tween("AlphaGameOverlay", Tween.LINEAR_EASE_NONE, 1f, -1f, 1f, 0f, false));
     }
 
     public void update() {
@@ -63,6 +83,9 @@ public class GameScreen extends Screen{
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Game.debugging = !Game.debugging;
         }
+
+        overlay.getTransform().setPosition(new Vector2(camera.position.x, camera.position.y));
+        ((BoxRenderer)overlay.getComponentByClass("BoxRenderer")).setColor(new Color(0, 0, 0, Game.tweenManager.getValue("AlphaGameOverlay")));
     }
 
     public void generateRoom() {
@@ -76,23 +99,26 @@ public class GameScreen extends Screen{
         }
         background.setLayout(0);
         add(background);
-        for (int x = 0; x < WIDTH; x++) {
-            add(new Wall(new Transform(new Vector2(x * 32 + 1, 0))));
-            add(new Wall(new Transform(new Vector2(x * 32, HEIGHT * 32))));
-        }
-        for (int y = 0; y < HEIGHT; y++) {
-            add(new Wall(new Transform(new Vector2(0, y * 32))));
-            add(new Wall(new Transform(new Vector2(WIDTH * 32, y * 32))));
-        }
-        add(new Key(new Transform(new Vector2(2 * 32, 2 * 32))));
-        add(new Wall(new Transform(new Vector2(4 * 32, 1 * 32))));
-        add(new Door(new Transform(new Vector2(4 * 32, 2.5f * 32))));
-        add(new Wall(new Transform(new Vector2(4 * 32, 4 * 32))));
-        add(new Wall(new Transform(new Vector2(3 * 32, 4 * 32))));
-        add(new Wall(new Transform(new Vector2(2 * 32, 4 * 32))));
-        add(new Wall(new Transform(new Vector2(1 * 32, 4 * 32))));
-        add(new ExitDoor(new Transform(new Vector2((WIDTH - 1) * 32, HEIGHT / 2 * 32))));
-        //add(new Zombie(new Transform(new Vector2(800, 500)), new Vector2(500, 300)));
-        add(new Knight(new Transform(new Vector2(1000, 700)), new Vector2(700, 500)));
+        
     }
+
+    public void die() {
+        if (!isDead) {
+            isDead = true;
+            remove(hud);
+            for (GameObject go : getGameObjects()) {
+                if (go.getComponentByClass("ConeLight") != null || go.getComponentByClass("PointLight") != null) {
+                    remove(go);
+                }
+            }
+            Game.tweenManager.goTween(new Tween("AlphaGameOverlay", Tween.LINEAR_EASE_NONE, 0f, 1f, 1f, 0f, false));
+            Game.waitAndDo(1f, new Callable() {
+                public Object call() throws Exception {
+                    setScreen(new GameOverScreen(game));
+                    return null;
+                }
+            });
+        }
+    }
+
 }

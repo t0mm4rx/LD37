@@ -58,6 +58,6 @@ public class ConeLight extends Component{
     }
 
     public void dispose() {
-        light.dispose();
+        light.setDistance(0);
     }
 }
