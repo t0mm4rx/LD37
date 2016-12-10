@@ -127,10 +127,10 @@ public class Player extends GameObject{
         }
 
         //Setting the camera centered on the player
-        if (getTransform().getPosition().x - Gdx.graphics.getWidth() / 2 > 0 && getTransform().getPosition().x + Gdx.graphics.getWidth() / 2 < 40 * 32) {
+        if (getTransform().getPosition().x - Gdx.graphics.getWidth() / 2 > 0 && getTransform().getPosition().x + Gdx.graphics.getWidth() / 2 < ((GameScreen)Game.getCurrentScreen()).width) {
             Game.getCurrentScreen().camera.position.set(getTransform().getPosition().x, Game.getCurrentScreen().camera.position.y, 0);
         }
-        if (getTransform().getPosition().y - Gdx.graphics.getHeight() / 2 > 0 && getTransform().getPosition().y + Gdx.graphics.getHeight() / 2 < 25 * 32) {
+        if (getTransform().getPosition().y - Gdx.graphics.getHeight() / 2 > 0 && getTransform().getPosition().y + Gdx.graphics.getHeight() / 2 < ((GameScreen)Game.getCurrentScreen()).height) {
             Game.getCurrentScreen().camera.position.set(Game.getCurrentScreen().camera.position.x, getTransform().getPosition().y, 0);
         }
 

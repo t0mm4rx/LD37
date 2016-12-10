@@ -18,14 +18,11 @@ import fr.tommarx.gameengine.Game.Game;
 import fr.tommarx.gameengine.Game.GameObject;
 import fr.tommarx.gameengine.Game.Screen;
 import fr.tommarx.ld37.Monsters.Monster;
-import fr.tommarx.ld37.Monsters.Turret;
-import fr.tommarx.ld37.Monsters.Zombie;
 
 public class GameScreen extends Screen{
 
-    Player player;
-    private final int WIDTH = 40, HEIGHT = 25;
     EmptyGameObject overlay;
+    public static float width, height;
     HUD hud;
     private boolean isDead;
 
@@ -37,10 +34,8 @@ public class GameScreen extends Screen{
         isDead = false;
         areLightsEnabled(true);
         world.setGravity(new Vector2(0f, 0f));
-        rayHandler.setAmbientLight(new Color(0, 0, 0, 0.6f));
-        player = new Player(new Transform(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)));
+        rayHandler.setAmbientLight(new Color(0, 0, 0, 0.4f));
         generateRoom();
-        add(player);
         new CollisionsManager(new CollisionsListener() {
             public void collisionEnter(GameObject a, GameObject b) {
                 if (a.getTag().equals("Player") && b.getTag().equals("Key")) {
@@ -89,17 +84,19 @@ public class GameScreen extends Screen{
     }
 
     public void generateRoom() {
+        Vector2 size = MapReader.read(Gdx.files.internal("map.map"));
+        this.width = size.x;
+        this.height = size.y;
         EmptyGameObject background = new EmptyGameObject(new Transform(new Vector2(64, 64)));
-        for (int x = 0; x < WIDTH * 32 / 128; x++) {
-            for (int y = 0; y < HEIGHT * 32 / 128 + 1; y++) {
+        for (int x = 0; x < width / 128; x++) {
+            for (int y = 0; y < height / 128; y++) {
                 SpriteRenderer renderer = new SpriteRenderer(background, Gdx.files.internal("sprites/ground.png"));
                 renderer.setOffset(x * 128, y * 128);
                 background.addComponent(renderer);
             }
         }
-        background.setLayout(0);
+        background.setLayout(-1);
         add(background);
-        
     }
 
     public void die() {
