@@ -64,14 +64,21 @@ public class BoxRenderer extends Component{
         return color;
     }
 
-    public void setWidth (int width) {
+    public void setWidth (float width) {
         this.width = width;
     }
 
-    public void setHeight (int height) {
+    public void setHeight (float height) {
         this.height = height;
     }
 
+    public float getHeight() {
+        return height;
+    }
+
+    public float getWidth() {
+        return width;
+    }
     public void update() {
 
     }

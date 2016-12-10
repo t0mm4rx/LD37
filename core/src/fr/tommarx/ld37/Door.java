@@ -54,12 +54,12 @@ public class Door extends GameObject {
         }
         text.setColor(new Color(1, 1, 1, Game.tweenManager.getValue("DoorAlpha:" + id)));
         if (Game.tweenManager.getValue("DoorScale:" + id) != 0) {
-            ((BoxRenderer) getComponentByClass("BoxRenderer")).setHeight((int) Game.tweenManager.getValue("DoorScale:" + id) * 64);
+            ((BoxRenderer) getComponentByClass("BoxRenderer")).setHeight(Game.tweenManager.getValue("DoorScale:" + id) * 64);
         }
     }
 
     private void open() {
-        Game.tweenManager.goTween(new Tween("DoorScale:" + id, Tween.BOUNCE_EASE_INOUT, 1f, -1f, .4f, 0f, false));
+        Game.tweenManager.goTween(new Tween("DoorScale:" + id, Tween.LINEAR_EASE_NONE, 1f, -1f, 1f, 0f, false));
         Game.waitAndDo(1f, new Callable() {
             public Object call() throws Exception {
                 Game.getCurrentScreen().remove(_this);

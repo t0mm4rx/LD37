@@ -11,11 +11,14 @@
 
 ## Prog
 - [x] Player : mouvements, animations
-- [ ] Portes : intéractions
-- [ ] Key : intéractions
+- [x] Portes : intéractions
+- [ ] Portes à l'horizontal
+- [x] Key : intéractions
 - [ ] Timer
+- [ ] HUD
 - [ ] Gestion lumière
 - [x] Overview map
+- [ ] Mobs
 
 ## Features
 - [ ] Menu
