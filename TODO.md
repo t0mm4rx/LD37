@@ -16,10 +16,10 @@
 - [x] Porte de sortie
 - [x] Key : intéractions
 - [ ] Timer
-- [ ] HUD
-- [ ] Gestion lumière
+- [x] HUD
+- [x] Gestion lumière
 - [x] Overview map
-- [ ] Mobs
+- [x] Mobs
 
 ## Features
 - [ ] Menu

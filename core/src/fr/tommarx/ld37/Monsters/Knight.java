@@ -12,7 +12,7 @@ public class Knight extends Monster {
     int currentDir;
 
     public Knight(Transform transform, Vector2 target) {
-        super(transform, 100, 20, 100);
+        super(transform, 100, 20, 20);
         currentDir = 1;
         addComponent(new BoxRenderer(this, 32, 32, Color.BLACK));
         point1 = transform.getPosition();
@@ -22,7 +22,6 @@ public class Knight extends Monster {
     }
 
     protected void update(float delta) {
-        System.out.println(currentDir);
         if (currentDir == 1) {
             body.getBody().setLinearVelocity(new Vector2(point2.x - point1.x, point2.y - point1.y).nor().scl(speed));
             if (getTransform().getPosition().dst(point2) < speed) {

@@ -18,6 +18,7 @@ public class Player extends GameObject{
     BoxBody body;
     private final int ACCELERATION = 20, SPEED = 300, DECELERATION = 7;
     public int keys, life;
+    private Vector2 knockback;
 
     public Player(Transform transform) {
         super(transform);
@@ -35,6 +36,8 @@ public class Player extends GameObject{
     }
 
     protected void update(float delta) {
+
+        //Game.debug(3, "VelX : " + body.getBody().getLinearVelocity().x + " && VelY : " + body.getBody().getLinearVelocity().y);
 
         //Decreasing speed
         if (body.getBody().getLinearVelocity().x < 0) {
@@ -94,6 +97,35 @@ public class Player extends GameObject{
             }
         }
 
+        //Knockback
+        if (knockback != null) {
+            body.getBody().setTransform(new Vector2(
+                    getTransform().getPosition().x + knockback.x,
+                    getTransform().getPosition().y + knockback.y
+            ), 0);
+            if (knockback.x > 0) {
+                knockback.x -= DECELERATION / 2;
+            }
+            if (knockback.x < 0) {
+                knockback.x += DECELERATION / 2;
+            }
+            if (knockback.y > 0) {
+                knockback.y -= DECELERATION / 2;
+            }
+            if (knockback.y < 0) {
+                knockback.y += DECELERATION / 2;
+            }
+            if (knockback.x < DECELERATION && knockback.x > -DECELERATION) {
+                knockback.x = 0;
+            }
+            if (knockback.y < DECELERATION && knockback.y > -DECELERATION) {
+                knockback.y = 0;
+            }
+            if (knockback.x == 0 || knockback.y == 0) {
+                knockback = null;
+            }
+        }
+
         //Setting the camera centered on the player
         if (getTransform().getPosition().x - Gdx.graphics.getWidth() / 2 > 0 && getTransform().getPosition().x + Gdx.graphics.getWidth() / 2 < 40 * 32) {
             Game.getCurrentScreen().camera.position.set(getTransform().getPosition().x, Game.getCurrentScreen().camera.position.y, 0);
@@ -109,9 +141,6 @@ public class Player extends GameObject{
 
     public void hurt (int damages, Vector2 other, float knockback) {
         life -= damages;
-        body.getBody().setLinearVelocity(new Vector2(
-                body.getBody().getLinearVelocity().x + (other.x - getTransform().getPosition().x) * -knockback,
-                body.getBody().getLinearVelocity().y + (other.y - getTransform().getPosition().y) * -knockback
-        ));
+        this.knockback = new Vector2(other.x - getTransform().getPosition().x, other.y - getTransform().getPosition().y).nor().scl(-knockback);
     }
 }

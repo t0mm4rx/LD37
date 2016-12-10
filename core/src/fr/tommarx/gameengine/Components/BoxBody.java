@@ -77,6 +77,7 @@ public class BoxBody extends Component{
         body.getWorld().destroyBody(body);
     }
 
+
     public Vector2 getSize() {
         return new Vector2(width, height);
     }

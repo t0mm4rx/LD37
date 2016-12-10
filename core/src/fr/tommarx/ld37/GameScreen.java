@@ -2,6 +2,7 @@ package fr.tommarx.ld37;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
 import fr.tommarx.gameengine.Collisions.CollisionsListener;
@@ -14,7 +15,6 @@ import fr.tommarx.gameengine.Game.GameObject;
 import fr.tommarx.gameengine.Game.Screen;
 import fr.tommarx.ld37.Monsters.Knight;
 import fr.tommarx.ld37.Monsters.Monster;
-import fr.tommarx.ld37.Monsters.Zombie;
 
 public class GameScreen extends Screen{
 
@@ -26,7 +26,9 @@ public class GameScreen extends Screen{
     }
 
     public void show() {
+        areLightsEnabled(true);
         world.setGravity(new Vector2(0f, 0f));
+        rayHandler.setAmbientLight(new Color(0, 0, 0, 0.6f));
         player = new Player(new Transform(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2)));
         generateRoom();
         add(player);

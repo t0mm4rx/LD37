@@ -3,6 +3,7 @@ package fr.tommarx.gameengine.Components;
 import com.badlogic.gdx.graphics.Color;
 
 import box2dLight.RayHandler;
+import fr.tommarx.gameengine.Game.Game;
 import fr.tommarx.gameengine.Game.GameObject;
 
 public class PointLight extends Component {
@@ -47,6 +48,7 @@ public class PointLight extends Component {
     }
 
     public void dispose() {
-        light.dispose();
+        //light.dispose();
+        light.setDistance(0);
     }
 }

@@ -6,8 +6,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 
 import fr.tommarx.gameengine.Components.BoxRenderer;
 import fr.tommarx.gameengine.Components.CircleBody;
+import fr.tommarx.gameengine.Components.PointLight;
 import fr.tommarx.gameengine.Components.SpriteRenderer;
 import fr.tommarx.gameengine.Components.Transform;
+import fr.tommarx.gameengine.Game.Game;
 import fr.tommarx.gameengine.Game.GameObject;
 
 public class Key extends GameObject {
@@ -17,6 +19,7 @@ public class Key extends GameObject {
         setTag("Key");
         addComponent(new SpriteRenderer(this, Gdx.files.internal("sprites/key.png")));
         addComponent(new CircleBody(this, 5, BodyDef.BodyType.DynamicBody));
+        addComponent(new PointLight(this, 10, 100, Color.ORANGE, Game.getCurrentScreen().rayHandler));
     }
 
     protected void update(float delta) {

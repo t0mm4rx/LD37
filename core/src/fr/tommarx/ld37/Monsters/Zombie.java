@@ -12,7 +12,7 @@ public class Zombie extends Monster {
     private boolean isComingBack;
 
     public Zombie(Transform transform, Vector2 target) {
-        super(transform, 60, 10, 700);
+        super(transform, 60, 10, 20);
         from = transform.getPosition();
         to = target;
         isComingBack = false;
