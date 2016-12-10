@@ -12,6 +12,7 @@ import fr.tommarx.gameengine.Game.EmptyGameObject;
 import fr.tommarx.gameengine.Game.Game;
 import fr.tommarx.gameengine.Game.GameObject;
 import fr.tommarx.gameengine.Game.Screen;
+import fr.tommarx.ld37.Monsters.Knight;
 import fr.tommarx.ld37.Monsters.Monster;
 import fr.tommarx.ld37.Monsters.Zombie;
 
@@ -89,6 +90,7 @@ public class GameScreen extends Screen{
         add(new Wall(new Transform(new Vector2(2 * 32, 4 * 32))));
         add(new Wall(new Transform(new Vector2(1 * 32, 4 * 32))));
         add(new ExitDoor(new Transform(new Vector2((WIDTH - 1) * 32, HEIGHT / 2 * 32))));
-        add(new Zombie(new Transform(new Vector2(800, 500)), new Vector2(500, 300)));
+        //add(new Zombie(new Transform(new Vector2(800, 500)), new Vector2(500, 300)));
+        add(new Knight(new Transform(new Vector2(1000, 700)), new Vector2(700, 500)));
     }
 }
