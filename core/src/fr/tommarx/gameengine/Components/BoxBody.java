@@ -74,7 +74,7 @@ public class BoxBody extends Component{
     }
 
     public void dispose() {
-        Game.getCurrentScreen().world.destroyBody(body);
+        body.getWorld().destroyBody(body);
     }
 
     public Vector2 getSize() {

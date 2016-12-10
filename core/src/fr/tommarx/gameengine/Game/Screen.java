@@ -19,6 +19,7 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
 
     protected ArrayList<Drawable> drawables;
     protected ArrayList<Drawable> drawablesHUD;
+    public ArrayList<Drawable> toDelete;
     public OrthographicCamera camera;
     protected Game game;
     public RayHandler rayHandler;
@@ -34,6 +35,7 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
         //gameObjects = new ArrayList<GameObject>();
         drawables = new ArrayList<Drawable>();
         drawablesHUD = new ArrayList<Drawable>();
+        toDelete = new ArrayList<Drawable>();
         //hud = new ArrayList<GameObject>();
         world = new World(new Vector2(0, -98f), true);
         colliderRenderer = new Box2DDebugRenderer();
@@ -131,6 +133,10 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
     }
 
     public void remove(Drawable go) {
+        toDelete.add(go);
+    }
+
+    public void kill(Drawable go) {
         ArrayList<Drawable> toDelete = new ArrayList<Drawable>();
         for (Drawable d : drawables) {
             if (d.equals(go)) {
@@ -178,6 +184,9 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
             colliderRenderer.render(world, Game.batch.getProjectionMatrix().cpy());
         }
 
+        for (Drawable d : toDelete) {
+            kill(d);
+        }
 
         update();
 

@@ -69,7 +69,11 @@ public class CircleBody extends Component{
     }
 
     public void dispose() {
-        Game.getCurrentScreen().world.destroyBody(body);
+        if (body != null) {
+            body.getWorld().destroyBody(body);
+            body.setUserData(null);
+            body = null;
+        }
     }
 
     public float getRadius() {
