@@ -18,7 +18,9 @@ public class Key extends GameObject {
         super(transform);
         setTag("Key");
         addComponent(new SpriteRenderer(this, Gdx.files.internal("sprites/key.png")));
-        addComponent(new CircleBody(this, 5, BodyDef.BodyType.DynamicBody));
+        CircleBody body = new CircleBody(this, 5, BodyDef.BodyType.DynamicBody);
+        body.getBody().setFixedRotation(true);
+        addComponent(body);
         addComponent(new PointLight(this, 10, 100, Color.ORANGE, Game.getCurrentScreen().rayHandler));
     }
 

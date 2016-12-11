@@ -2,23 +2,29 @@ package fr.tommarx.ld37;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
+import fr.tommarx.gameengine.Components.AnimationManager;
 import fr.tommarx.gameengine.Components.BoxBody;
-import fr.tommarx.gameengine.Components.BoxRenderer;
+import fr.tommarx.gameengine.Components.SpriteRenderer;
 import fr.tommarx.gameengine.Components.Transform;
 import fr.tommarx.gameengine.Easing.Tween;
 import fr.tommarx.gameengine.Game.Game;
 import fr.tommarx.gameengine.Game.GameObject;
+import fr.tommarx.gameengine.Util.Animation;
 
 public class Player extends GameObject{
 
     BoxBody body;
-    private final int ACCELERATION = 20, SPEED = 300, DECELERATION = 7;
+    private final int ACCELERATION = 20, SPEED = 500, DECELERATION = 7, UP = 1, DOWN = 2, RIGHT = 3, LEFT = 4;
+    private String[] images = new String[10];
     public int keys, life;
     private Vector2 knockback;
+    private AnimationManager anim;
+    int lastDirection;
 
     public Player(Transform transform) {
         super(transform);
@@ -29,10 +35,26 @@ public class Player extends GameObject{
         keys = 0;
         life = 10;
 
-        body = new BoxBody(this, 32, 32, BodyDef.BodyType.DynamicBody);
+        body = new BoxBody(this, 20, 20, BodyDef.BodyType.DynamicBody);
         body.getBody().setFixedRotation(true);
 
-        addComponent(new BoxRenderer(this, 32, 32, new Color(1, 1, 1, 1)));
+        images[UP] = "sprites/player/up.png";
+        images[DOWN] = "sprites/player/down.png";
+        images[LEFT] = "sprites/player/left.png";
+        images[RIGHT] = "sprites/player/right.png";
+
+        //addComponent(new BoxRenderer(this, 32, 32, Color.WHITE));
+
+        addComponent(new SpriteRenderer(this, Gdx.files.internal("sprites/player/down.png")));
+        anim = new AnimationManager(this);
+        anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/player/player_down.png")), 6, 1, .1f, true, DOWN));
+        anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/player/player_up.png")), 3, 1, .1f, true, UP));
+        anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/player/player_right.png")), 5 , 1, .1f, true, RIGHT));
+        anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/player/player_left.png")), 5, 1, .1f, true, LEFT));
+        //anim.setCurrentAnimation(1);
+        lastDirection = DOWN;
+
+        addComponent(anim);
         addComponent(body);
     }
 
@@ -142,6 +164,58 @@ public class Player extends GameObject{
             ((GameScreen)Game.getCurrentScreen()).die();
         }
 
+        if (isWalking()) {
+            if (anim.getCurrentAnimation() != getDirection()) {
+                anim.setCurrentAnimation(getDirection());
+            }
+        } else {
+            getSpriteRenderer().setTexture(new TextureRegion(new Texture(Gdx.files.internal(images[getDirection()]))));
+        }
+
+        Game.debug(4, "Direction : " + getDirection());
+        Game.debug(5, "Walking : " + isWalking());
+
+    }
+
+    public int getDirection() {
+        Vector2 speed = body.getBody().getLinearVelocity();
+        if (speed.x < 1 && speed.x > -1 && speed.y < 1 && speed.y > -1) {
+            return lastDirection;
+        }
+        if (distanceTo0(speed.x) > distanceTo0(speed.y)) {
+            if (speed.x < 0) {
+                lastDirection = LEFT;
+                return LEFT;
+            } else if(speed.x > 0) {
+                lastDirection = RIGHT;
+                return RIGHT;
+            }
+        }
+        if (distanceTo0(speed.x) < distanceTo0(speed.y)) {
+            if (speed.y < 0) {
+                lastDirection = DOWN;
+                return DOWN;
+            } else if(speed.y > 0) {
+                lastDirection = UP;
+                return UP;
+            }
+        }
+        return lastDirection;
+    }
+
+    public float distanceTo0(float x) {
+        if (x < 0) {
+            return -x;
+        }
+        return x;
+    }
+
+    public boolean isWalking() {
+        Vector2 speed = body.getBody().getLinearVelocity();
+        if ((speed.x > 1 || speed.x < -1) || (speed.y > 1 || speed.y < -1)) {
+            return true;
+        }
+        return false;
     }
 
     public void hurt (int damages, Vector2 other, float knockback) {

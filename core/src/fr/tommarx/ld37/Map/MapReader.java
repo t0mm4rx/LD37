@@ -40,7 +40,7 @@ public class MapReader {
                         Game.getCurrentScreen().add(new Key(new Transform(new Vector2(x * 32 + 16, size.y - y * 32 - 16))));
                     }
                     if (object == 3) {
-                        Game.getCurrentScreen().add(new Player(new Transform(new Vector2(x * 32 + 16, size.y - y * 32 - 16))));
+                        Game.getCurrentScreen().add(new Player(new Transform(new Vector2(x * 32 + 16, size.y - y * 32 - 16), new Vector2(1.5f, 1.5f), 0)));
                     }
                     if (object == 4) {
                         Game.getCurrentScreen().add(new ExitDoor(new Transform(new Vector2(x * 32 + 16, y * 32 - 48))));

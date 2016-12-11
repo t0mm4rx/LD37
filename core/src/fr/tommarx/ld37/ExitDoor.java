@@ -63,7 +63,7 @@ public class ExitDoor extends GameObject {
     }
 
     private void open(GameObject player) {
-        if (((Player) player).keys > Game.getCurrentScreen().getGameObjectsByTag("Key").size()) {
+        if (((Player) player).keys >= Game.getCurrentScreen().getGameObjectsByTag("Key").size() + ((Player) player).keys) {
             Game.tweenManager.goTween(new Tween("DoorScale:" + id, Tween.LINEAR_EASE_NONE, 1f, -1f, 1f, 0f, false));
             Game.waitAndDo(1f, new Callable() {
                 public Object call() throws Exception {

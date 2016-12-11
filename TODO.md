@@ -7,7 +7,7 @@
 ## Assets
 - [x] Texture ground
 - [x] Texture wall
-- [ ] Sprites player
+- [x] Sprites player
 
 ## Prog
 - [x] Player : mouvements, animations
