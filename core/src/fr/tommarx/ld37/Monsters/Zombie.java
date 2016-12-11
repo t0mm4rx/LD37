@@ -12,7 +12,6 @@ import fr.tommarx.gameengine.Components.CircleBody;
 import fr.tommarx.gameengine.Components.SpriteRenderer;
 import fr.tommarx.gameengine.Components.Transform;
 import fr.tommarx.gameengine.Util.Animation;
-import fr.tommarx.ld37.Player;
 
 public class Zombie extends Monster {
 
@@ -39,7 +38,7 @@ public class Zombie extends Monster {
             anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie/walk_right.png")), 3, 1, .1f, true, RIGHT));
             anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie/walk_left.png")), 3, 1, .1f, true, LEFT));
         } else {
-            anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie2/walk_down.png")), 4, 1, .1f, true, DOWN));
+            anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie2/walk_down.png")), 3, 1, .1f, true, DOWN));
             anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie2/walk_up.png")), 3, 1, .1f, true, UP));
             anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie2/walk_right.png")), 3, 1, .1f, true, RIGHT));
             anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie2/walk_left.png")), 3, 1, .1f, true, LEFT));

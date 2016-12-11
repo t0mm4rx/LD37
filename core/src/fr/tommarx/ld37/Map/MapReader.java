@@ -55,10 +55,13 @@ public class MapReader {
             String name = mob.split(":")[0];
             String props = mob.split(":")[1];
             if (name.equals("zombie")) {
-                Game.getCurrentScreen().add(new Zombie(new Transform(getPoint(points, getPropertie(props, 0)).position), getPoint(points, getPropertie(props, 1)).position, 60, 1));
+                Game.getCurrentScreen().add(new Zombie(new Transform(getPoint(points, getPropertie(props, 0)).position), getPoint(points, getPropertie(props, 1)).position, 100, 1));
             }
             if (name.equals("zombie2")) {
-                Game.getCurrentScreen().add(new Zombie(new Transform(getPoint(points, getPropertie(props, 0)).position), getPoint(points, getPropertie(props, 1)).position, 80, 2));
+                Game.getCurrentScreen().add(new Zombie(new Transform(getPoint(points, getPropertie(props, 0)).position), getPoint(points, getPropertie(props, 1)).position, 100, 2));
+            }
+            if (name.equals("zombie3")) {
+                Game.getCurrentScreen().add(new Zombie(new Transform(getPoint(points, getPropertie(props, 0)).position), getPoint(points, getPropertie(props, 1)).position, 100, 2));
             }
             if (name.equals("turret")) {
                 Game.getCurrentScreen().add(new Turret(new Transform(getPoint(points, getPropertie(props, 0)).position), Integer.parseInt(getPropertie(props, 1))));

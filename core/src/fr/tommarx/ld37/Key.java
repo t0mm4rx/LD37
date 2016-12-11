@@ -21,7 +21,7 @@ public class Key extends GameObject {
         CircleBody body = new CircleBody(this, 5, BodyDef.BodyType.DynamicBody);
         body.getBody().setFixedRotation(true);
         addComponent(body);
-        addComponent(new PointLight(this, 10, 100, Color.ORANGE, Game.getCurrentScreen().rayHandler));
+        addComponent(new PointLight(this, 100, 100, Color.ORANGE, Game.getCurrentScreen().rayHandler));
     }
 
     protected void update(float delta) {

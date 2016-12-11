@@ -2,6 +2,7 @@ package fr.tommarx.ld37;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -9,7 +10,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 
 import fr.tommarx.gameengine.Components.AnimationManager;
 import fr.tommarx.gameengine.Components.BoxBody;
+import fr.tommarx.gameengine.Components.PointLight;
 import fr.tommarx.gameengine.Components.SpriteRenderer;
+import fr.tommarx.gameengine.Components.Text;
 import fr.tommarx.gameengine.Components.Transform;
 import fr.tommarx.gameengine.Easing.Tween;
 import fr.tommarx.gameengine.Game.Game;
@@ -25,6 +28,7 @@ public class Player extends GameObject{
     private Vector2 knockback;
     private AnimationManager anim;
     int lastDirection;
+    Text damages;
 
     public Player(Transform transform) {
         super(transform);
@@ -49,13 +53,18 @@ public class Player extends GameObject{
         anim = new AnimationManager(this);
         anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/player/player_down.png")), 6, 1, .1f, true, DOWN));
         anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/player/player_up.png")), 3, 1, .1f, true, UP));
-        anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/player/player_right.png")), 5 , 1, .1f, true, RIGHT));
+        anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/player/player_right.png")), 5, 1, .1f, true, RIGHT));
         anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/player/player_left.png")), 5, 1, .1f, true, LEFT));
         //anim.setCurrentAnimation(1);
         lastDirection = DOWN;
 
+        damages = new Text(this, Gdx.files.internal("vcr.ttf"), 15, "-1", new Color(1, .1f, .1f, 0f));
+        damages.setOffset(0, 50);
+        addComponent(damages);
+
         addComponent(anim);
         addComponent(body);
+
     }
 
     protected void update(float delta) {
@@ -175,6 +184,8 @@ public class Player extends GameObject{
         Game.debug(4, "Direction : " + getDirection());
         Game.debug(5, "Walking : " + isWalking());
 
+        damages.setColor(new Color(this.damages.getColor().r, this.damages.getColor().g, this.damages.getColor().b, Game.tweenManager.getValue("AlphaDamages")));
+
     }
 
     public int getDirection() {
@@ -220,6 +231,9 @@ public class Player extends GameObject{
 
     public void hurt (int damages, Vector2 other, float knockback) {
         life -= damages;
+        Game.tweenManager.goTween(new Tween("AlphaDamages", Tween.LINEAR_EASE_INOUT, 1, -1f, 1f, .5f, false));
+        this.damages.setText("-" + damages);
+        this.damages.setColor(new Color(this.damages.getColor().r, this.damages.getColor().g, this.damages.getColor().b, 1f));
         this.knockback = new Vector2(other.x - getTransform().getPosition().x, other.y - getTransform().getPosition().y).nor().scl(-knockback);
     }
 }

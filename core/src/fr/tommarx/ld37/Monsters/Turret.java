@@ -1,11 +1,13 @@
 package fr.tommarx.ld37.Monsters;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
 import fr.tommarx.gameengine.Components.BoxBody;
 import fr.tommarx.gameengine.Components.BoxRenderer;
+import fr.tommarx.gameengine.Components.SpriteRenderer;
 import fr.tommarx.gameengine.Components.Transform;
 import fr.tommarx.gameengine.Game.Game;
 
@@ -16,7 +18,8 @@ public class Turret extends Monster{
 
     public Turret(Transform transform, float fireRate) {
         super(transform, 0, 1, 20);
-        addComponent(new BoxRenderer(this, 16, 16, Color.WHITE));
+        //addComponent(new BoxRenderer(this, 16, 16, Color.WHITE));
+        addComponent(new SpriteRenderer(this, Gdx.files.internal("sprites/turret/turret_idle.png")));
         addComponent(new BoxBody(this, 16, 16, BodyDef.BodyType.StaticBody));
         this.fireRate = fireRate;
         timeB = System.currentTimeMillis();

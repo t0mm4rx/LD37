@@ -100,6 +100,10 @@ public class GameScreen extends Screen{
             Game.debugging = !Game.debugging;
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            setScreen(new GameScreen(game));
+        }
+
         overlay.getTransform().setPosition(new Vector2(camera.position.x, camera.position.y));
         ((BoxRenderer)overlay.getComponentByClass("BoxRenderer")).setColor(new Color(0, 0, 0, Game.tweenManager.getValue("AlphaGameOverlay")));
 
@@ -109,7 +113,7 @@ public class GameScreen extends Screen{
     }
 
     public void generateRoom() {
-        Vector2 size = fr.tommarx.ld37.Map.MapReader.read(Gdx.files.internal("map.map"));
+        Vector2 size = fr.tommarx.ld37.Map.MapReader.read(Gdx.files.internal("map2.map"));
         this.width = size.x;
         this.height = size.y;
         EmptyGameObject background = new EmptyGameObject(new Transform(new Vector2(64, 64)));
