@@ -102,6 +102,10 @@ public class GameScreen extends Screen{
 
         overlay.getTransform().setPosition(new Vector2(camera.position.x, camera.position.y));
         ((BoxRenderer)overlay.getComponentByClass("BoxRenderer")).setColor(new Color(0, 0, 0, Game.tweenManager.getValue("AlphaGameOverlay")));
+
+        if (getGameObjectByTag("Player").getTransform().getPosition().x > width) {
+            win();
+        }
     }
 
     public void generateRoom() {

@@ -33,10 +33,18 @@ public class Zombie extends Monster {
         addComponent(new SpriteRenderer(this, Gdx.files.internal("empty32x32.png")));
 
         anim = new AnimationManager(this);
-        anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie/walk_down.png")), 4, 1, .1f, true, DOWN));
-        anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie/walk_up.png")), 3, 1, .1f, true, UP));
-        anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie/walk_right.png")), 3 , 1, .1f, true, RIGHT));
-        anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie/walk_left.png")), 3, 1, .1f, true, LEFT));
+        if (damages < 2) {
+            anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie/walk_down.png")), 4, 1, .1f, true, DOWN));
+            anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie/walk_up.png")), 3, 1, .1f, true, UP));
+            anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie/walk_right.png")), 3, 1, .1f, true, RIGHT));
+            anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie/walk_left.png")), 3, 1, .1f, true, LEFT));
+        } else {
+            anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie2/walk_down.png")), 4, 1, .1f, true, DOWN));
+            anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie2/walk_up.png")), 3, 1, .1f, true, UP));
+            anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie2/walk_right.png")), 3, 1, .1f, true, RIGHT));
+            anim.addAnimation(new Animation(this, new Texture(Gdx.files.internal("sprites/zombie2/walk_left.png")), 3, 1, .1f, true, LEFT));
+        }
+
         addComponent(anim);
 
         this.target = to;

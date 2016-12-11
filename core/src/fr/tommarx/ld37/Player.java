@@ -35,7 +35,7 @@ public class Player extends GameObject{
         keys = 0;
         life = 10;
 
-        body = new BoxBody(this, 20, 20, BodyDef.BodyType.DynamicBody);
+        body = new BoxBody(this, 16, 20, BodyDef.BodyType.DynamicBody);
         body.getBody().setFixedRotation(true);
 
         images[UP] = "sprites/player/up.png";
