@@ -24,6 +24,7 @@ public class Player extends GameObject{
         super(transform);
 
         setTag("Player");
+        setLayout(1);
 
         keys = 0;
         life = 10;

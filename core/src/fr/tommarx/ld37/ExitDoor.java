@@ -21,13 +21,16 @@ public class ExitDoor extends GameObject {
     Text text;
     String id;
     GameObject _this;
+    public boolean open;
 
     public ExitDoor(Transform transform) {
         super(transform);
         _this = this;
+        open = false;
         setTag("ExitDoor");
-        addComponent(new BoxRenderer(this, 20, 128, Color.BLUE));
-        addComponent(new BoxBody(this, 20, 128, BodyDef.BodyType.StaticBody));
+        addComponent(new BoxRenderer(this, 20, 32 * 5, Color.BLUE));
+        addComponent(new BoxBody(this, 20, 32 * 5, BodyDef.BodyType.StaticBody));
+        addComponent(new BoxBody(this, 10, 32 * 5, BodyDef.BodyType.StaticBody, true));
         text = new Text(this, Gdx.files.internal("vcr.ttf"), 14, "Press enter to open", new Color(1f, 1f, 1f, 0f));
         text.setOffset(-90, 0);
         id = UUID.randomUUID().toString();
@@ -65,6 +68,7 @@ public class ExitDoor extends GameObject {
             Game.waitAndDo(1f, new Callable() {
                 public Object call() throws Exception {
                     Game.getCurrentScreen().remove(_this);
+                    open = true;
                     return null;
                 }
             });

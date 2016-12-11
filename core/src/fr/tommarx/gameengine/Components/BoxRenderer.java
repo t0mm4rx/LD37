@@ -10,7 +10,7 @@ import fr.tommarx.gameengine.Game.GameObject;
 
 public class BoxRenderer extends Component{
 
-    private float width, height;
+    private float width, height, offsetX, offsetY;
     private Color color;
     private GameObject go;
     private ShapeRenderer shapeRenderer;
@@ -20,6 +20,8 @@ public class BoxRenderer extends Component{
         this.width = width;
         this.height = height;
         this.color = color;
+        offsetX = 0;
+        offsetY = 0;
         shapeRenderer = new ShapeRenderer();
     }
 
@@ -31,8 +33,8 @@ public class BoxRenderer extends Component{
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(color);
         shapeRenderer.rect(
-                go.getTransform().getPosition().x - width / 2,
-                go.getTransform().getPosition().y - height / 2,
+                go.getTransform().getPosition().x - width / 2 + offsetX,
+                go.getTransform().getPosition().y - height / 2 + offsetY,
                 width,
                 height
                 );
@@ -70,6 +72,11 @@ public class BoxRenderer extends Component{
 
     public void setHeight (float height) {
         this.height = height;
+    }
+
+    public void setOffset(float x, float y) {
+        this.offsetY = y;
+        this.offsetX = x;
     }
 
     public float getHeight() {

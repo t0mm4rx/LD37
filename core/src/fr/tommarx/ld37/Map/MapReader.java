@@ -8,7 +8,9 @@ import java.util.ArrayList;
 
 import fr.tommarx.gameengine.Components.Transform;
 import fr.tommarx.gameengine.Game.Game;
+import fr.tommarx.ld37.ExitDoor;
 import fr.tommarx.ld37.Key;
+import fr.tommarx.ld37.Monsters.Trap;
 import fr.tommarx.ld37.Monsters.Turret;
 import fr.tommarx.ld37.Monsters.Zombie;
 import fr.tommarx.ld37.Player;
@@ -40,6 +42,9 @@ public class MapReader {
                     if (object == 3) {
                         Game.getCurrentScreen().add(new Player(new Transform(new Vector2(x * 32 + 16, size.y - y * 32 - 16))));
                     }
+                    if (object == 4) {
+                        Game.getCurrentScreen().add(new ExitDoor(new Transform(new Vector2(x * 32 + 16, y * 32 - 48))));
+                    }
                 } else {
                     points.add(new Point(line.split(",")[x], x, size.y / 32 - y));
                 }
@@ -50,10 +55,19 @@ public class MapReader {
             String name = mob.split(":")[0];
             String props = mob.split(":")[1];
             if (name.equals("zombie")) {
-                Game.getCurrentScreen().add(new Zombie(new Transform(getPoint(points, getPropertie(props, 0)).position), getPoint(points, getPropertie(props, 1)).position));
+                Game.getCurrentScreen().add(new Zombie(new Transform(getPoint(points, getPropertie(props, 0)).position), getPoint(points, getPropertie(props, 1)).position, 60, 1));
+            }
+            if (name.equals("zombie2")) {
+                Game.getCurrentScreen().add(new Zombie(new Transform(getPoint(points, getPropertie(props, 0)).position), getPoint(points, getPropertie(props, 1)).position, 80, 2));
             }
             if (name.equals("turret")) {
                 Game.getCurrentScreen().add(new Turret(new Transform(getPoint(points, getPropertie(props, 0)).position), Integer.parseInt(getPropertie(props, 1))));
+            }
+            if (name.equals("trap")) {
+                Vector2 pos = getPoint(points, getPropertie(props, 0)).position;
+                pos.x += 16;
+                pos.y -= 16;
+                Game.getCurrentScreen().add(new Trap(new Transform(pos), Float.parseFloat(getPropertie(props, 1))));
             }
         }
 

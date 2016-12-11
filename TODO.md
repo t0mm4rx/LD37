@@ -1,21 +1,21 @@
 # TODO
 
 ## Game design
-- [ ] Que ce passe t-il quand on veut récupérer une clé ?
-- [ ] Quels ennemis sur la carte hors des phases de récup de clés ?
+- [x] Que ce passe t-il quand on veut récupérer une clé ?
+- [x] Quels ennemis sur la carte hors des phases de récup de clés ?
 
 ## Assets
-- [ ] Texture ground
-- [ ] Texture wall
+- [x] Texture ground
+- [x] Texture wall
 - [ ] Sprites player
 
 ## Prog
 - [x] Player : mouvements, animations
 - [x] Portes : intéractions
-- [ ] Portes à l'horizontal
+- [x] Portes à l'horizontal
 - [x] Porte de sortie
 - [x] Key : intéractions
-- [ ] Timer
+- [x] Timer
 - [x] HUD
 - [x] Gestion lumière
 - [x] Overview map
@@ -25,6 +25,6 @@
 - [ ] Menu
 - [ ] Son
 - [ ] Maps aléatoires
-- [ ] Mettre des tweens partout
+- [x] Mettre des tweens partout
 - [ ] Aide joueur avec explications au débuts
 - [ ] Screen shakes

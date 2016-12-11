@@ -60,6 +60,25 @@ public class BoxBody extends Component{
         shape.dispose();
     }
 
+    public BoxBody(GameObject go, float width, float height, BodyDef.BodyType bodyType, boolean isSensor) {
+        this.go = go;
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = bodyType;
+        bodyDef.position.set(go.getTransform().getPosition().x, go.getTransform().getPosition().y);
+        bodyDef.angle = Math.DegreeToRadian(go.getTransform().getRotation());
+        body = Game.getCurrentScreen().world.createBody(bodyDef);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width / 2 * go.getTransform().getScale().x, height / 2* go.getTransform().getScale().y);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1f;
+        if (isSensor) {
+            fixtureDef.isSensor = true;
+        }
+        body.createFixture(fixtureDef);
+        shape.dispose();
+    }
+
     public void render() {
 
     }

@@ -24,16 +24,18 @@ public class Turret extends Monster{
 
     protected void update(float delta) {
         if (System.currentTimeMillis() - timeB >= fireRate * 1000) {
-            timeB = System.currentTimeMillis();
-            Vector2 direction = new Vector2(
-                   Game.getCurrentScreen().getGameObjectByTag("Player").getTransform().getPosition().x - getTransform().getPosition().x,
-                   Game.getCurrentScreen().getGameObjectByTag("Player").getTransform().getPosition().y - getTransform().getPosition().y
-            ).nor();
-            Vector2 position = new Vector2(
-                    getTransform().getPosition().x + direction.x * 16,
-                    getTransform().getPosition().y + direction.y * 16
-            );
-            Game.getCurrentScreen().add(new Bullet(new Transform(position), Game.getCurrentScreen().getGameObjectByTag("Player").getTransform().getPosition()));
+            if (getTransform().getPosition().dst(Game.getCurrentScreen().getGameObjectByClass("Player").getTransform().getPosition()) < 300) {
+                timeB = System.currentTimeMillis();
+                Vector2 direction = new Vector2(
+                        Game.getCurrentScreen().getGameObjectByTag("Player").getTransform().getPosition().x - getTransform().getPosition().x,
+                        Game.getCurrentScreen().getGameObjectByTag("Player").getTransform().getPosition().y - getTransform().getPosition().y
+                ).nor();
+                Vector2 position = new Vector2(
+                        getTransform().getPosition().x + direction.x * 16,
+                        getTransform().getPosition().y + direction.y * 16
+                );
+                Game.getCurrentScreen().add(new Bullet(new Transform(position), Game.getCurrentScreen().getGameObjectByTag("Player").getTransform().getPosition()));
+            }
         }
     }
 }

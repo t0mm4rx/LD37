@@ -18,6 +18,7 @@ import fr.tommarx.gameengine.Game.Game;
 import fr.tommarx.gameengine.Game.GameObject;
 import fr.tommarx.gameengine.Game.Screen;
 import fr.tommarx.ld37.Monsters.Monster;
+import fr.tommarx.ld37.Monsters.Trap;
 
 public class GameScreen extends Screen{
 
@@ -57,6 +58,26 @@ public class GameScreen extends Screen{
                 }
                 if (a.getTag().contains("Bullet")) {
                     Game.getCurrentScreen().remove(a);
+                }
+                if (a.getTag().equals("Player") && b.getTag().equals("Trap")) {
+                    if (((Trap) b).open) {
+                        ((Player) a).hurt(((Player) a).life, b.getTransform().getPosition(), 0);
+                    }
+                }
+                if (b.getTag().equals("Player") && a.getTag().equals("Trap")) {
+                    if (((Trap) a).open) {
+                        ((Player) b).hurt(((Player) b).life, b.getTransform().getPosition(), 0);
+                    }
+                }
+                if (b.getTag().equals("ExitDoor")) {
+                    if (((ExitDoor) b).open) {
+                        ((GameScreen) Game.getCurrentScreen()).win();
+                    }
+                }
+                if (a.getTag().equals("ExitDoor")) {
+                    if (((ExitDoor) a).open) {
+                        ((GameScreen) Game.getCurrentScreen()).win();
+                    }
                 }
             }
 
@@ -112,6 +133,26 @@ public class GameScreen extends Screen{
             Game.waitAndDo(1f, new Callable() {
                 public Object call() throws Exception {
                     setScreen(new GameOverScreen(game));
+                    return null;
+                }
+            });
+        }
+    }
+
+    public void win() {
+        System.out.println("Win");
+        if (!isDead) {
+            isDead = true;
+            remove(hud);
+            for (GameObject go : getGameObjects()) {
+                if (go.getComponentByClass("ConeLight") != null || go.getComponentByClass("PointLight") != null) {
+                    remove(go);
+                }
+            }
+            Game.tweenManager.goTween(new Tween("AlphaGameOverlay", Tween.LINEAR_EASE_NONE, 0f, 1f, 1f, 0f, false));
+            Game.waitAndDo(1f, new Callable() {
+                public Object call() throws Exception {
+                    setScreen(new WinScreen(game));
                     return null;
                 }
             });
