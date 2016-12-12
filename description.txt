@@ -1,0 +1,22 @@
+Hi !
+
+-- The game --
+The game goal is to exit the room, before the timer is over. To exit the level, you have to open a door, but you can open it only if you have all keys of the level.
+But be carefull of monsters that you will have to avoid.
+
+-- Controls --
+W/A/S/D or UP/LEFT/DOWN/RIGHT to move.
+M to have an overview of the map.
+R to restart.
+
+
+-- The team --
+We are two 15-years-old frenchies, Adrien and Tom.
+Adrien made the game design, drew sprites, and made the level.
+I made all the coding stuffs.
+It was our first LD !
+
+-- Technical specs --
+We have used a custom game engine based on LibGDX, so in JAVA.
+
+Enjoy !

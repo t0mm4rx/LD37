@@ -43,7 +43,7 @@ public class MapReader {
                         Game.getCurrentScreen().add(new Player(new Transform(new Vector2(x * 32 + 16, size.y - y * 32 - 16), new Vector2(1.5f, 1.5f), 0)));
                     }
                     if (object == 4) {
-                        Game.getCurrentScreen().add(new ExitDoor(new Transform(new Vector2(x * 32 + 16, y * 32 - 48))));
+                        Game.getCurrentScreen().add(new ExitDoor(new Transform(new Vector2(x * 32 + 16, size.y - y * 32 - 16))));
                     }
                 } else {
                     points.add(new Point(line.split(",")[x], x, size.y / 32 - y));
@@ -58,7 +58,7 @@ public class MapReader {
                 Game.getCurrentScreen().add(new Zombie(new Transform(getPoint(points, getPropertie(props, 0)).position), getPoint(points, getPropertie(props, 1)).position, 100, 1));
             }
             if (name.equals("zombie2")) {
-                Game.getCurrentScreen().add(new Zombie(new Transform(getPoint(points, getPropertie(props, 0)).position), getPoint(points, getPropertie(props, 1)).position, 100, 2));
+                Game.getCurrentScreen().add(new Zombie(new Transform(getPoint(points, getPropertie(props, 0)).position, new Vector2(2, 2), 0), getPoint(points, getPropertie(props, 1)).position, 100, 2));
             }
             if (name.equals("zombie3")) {
                 Game.getCurrentScreen().add(new Zombie(new Transform(getPoint(points, getPropertie(props, 0)).position), getPoint(points, getPropertie(props, 1)).position, 100, 2));

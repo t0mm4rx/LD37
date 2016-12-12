@@ -10,7 +10,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 
 import fr.tommarx.gameengine.Components.AnimationManager;
 import fr.tommarx.gameengine.Components.BoxBody;
-import fr.tommarx.gameengine.Components.PointLight;
 import fr.tommarx.gameengine.Components.SpriteRenderer;
 import fr.tommarx.gameengine.Components.Text;
 import fr.tommarx.gameengine.Components.Transform;
@@ -29,6 +28,9 @@ public class Player extends GameObject{
     private AnimationManager anim;
     int lastDirection;
     Text damages;
+    double timeB;
+    private boolean hurtable;
+
 
     public Player(Transform transform) {
         super(transform);
@@ -64,6 +66,8 @@ public class Player extends GameObject{
 
         addComponent(anim);
         addComponent(body);
+
+        timeB = System.currentTimeMillis();
 
     }
 
@@ -186,6 +190,12 @@ public class Player extends GameObject{
 
         damages.setColor(new Color(this.damages.getColor().r, this.damages.getColor().g, this.damages.getColor().b, Game.tweenManager.getValue("AlphaDamages")));
 
+        if (!hurtable) {
+            if (System.currentTimeMillis() - timeB > 2000) {
+                hurtable = true;
+            }
+        }
+
     }
 
     public int getDirection() {
@@ -230,10 +240,14 @@ public class Player extends GameObject{
     }
 
     public void hurt (int damages, Vector2 other, float knockback) {
-        life -= damages;
-        Game.tweenManager.goTween(new Tween("AlphaDamages", Tween.LINEAR_EASE_INOUT, 1, -1f, 1f, .5f, false));
-        this.damages.setText("-" + damages);
-        this.damages.setColor(new Color(this.damages.getColor().r, this.damages.getColor().g, this.damages.getColor().b, 1f));
-        this.knockback = new Vector2(other.x - getTransform().getPosition().x, other.y - getTransform().getPosition().y).nor().scl(-knockback);
+        if (hurtable) {
+            timeB = System.currentTimeMillis();
+            hurtable = false;
+            life -= damages;
+            Game.tweenManager.goTween(new Tween("AlphaDamages", Tween.LINEAR_EASE_INOUT, 1, -1f, 1f, .5f, false));
+            this.damages.setText("-" + damages);
+            this.damages.setColor(new Color(this.damages.getColor().r, this.damages.getColor().g, this.damages.getColor().b, 1f));
+            this.knockback = new Vector2(other.x - getTransform().getPosition().x, other.y - getTransform().getPosition().y).nor().scl(-knockback);
+        }
     }
 }
